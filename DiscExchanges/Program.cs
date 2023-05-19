@@ -1,4 +1,6 @@
 using DiscExchanges.MappingProfiles;
+using DiscExchanges.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(typeof(MovieMappings));
+builder.Services.AddAutoMapper(typeof(ListingMappings));
+builder.Services.AddAutoMapper(typeof(UserMappings));
+builder.Services.AddDbContext<ApiDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
